@@ -10,14 +10,14 @@
     <hr>
     <h2>Create new Blog Post: </h2>
     <form action="posts" method="POST">
-        <label for="title">Title: </label>
+        <label for="title"><strong>Title: </strong></label>
         <input class="form-control" type="text" name="title" id="title" placeholder="Enter Title" aria-label="Enter Title">
         <br>
-        <label for="author">Author: </label>
-        <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author name" aria-label="Enter Author name">
+        <label for="author"><strong>Author: </strong></label>
+        <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author's name" aria-label="Enter Author's name">
         <br>
-        <label for="content">Post: </label>
-        <input type="text" name="content" id="content">
+        <label for="content"><strong>Post: </strong></label>
+        <textarea class="form-control" name="content" id="content" placeholder="Enter Content" aria-label="Enter Content" rows="10"></textarea>
         <br>
         <input type="submit" value="Post">
     </form>
@@ -34,7 +34,7 @@
         {% endif %}
         <br>
         
-        <p>{{ post.content }}</p>
+        <p style="white-space: pre-wrap">{{ post.content }}</p>
 
         <br>
         <br>
