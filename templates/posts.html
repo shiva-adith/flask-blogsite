@@ -1,34 +1,39 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Posts</title>
+  <title>Posts</title>
 {% endblock %}
 
 {% block body %}
-    <div class="header-div">
-        <h1 class="posts-heading">All posts are displayed here!</h1>
-        <a class="new-post btn btn-success btn-lg" href="/posts/new">+ New Posts</a>
+
+  <div class="row header-row">
+    <div class="col-lg-6">
+      <h1 class="posts-heading">All posts are displayed here!</h1>
     </div>
-    <hr>
-    <br>
+    <div class="col-lg-6">
+      <a class="new-post btn btn-success btn-lg" href="{{ url_for('new_posts') }}">+ New Posts</a>
+    </div>
+  </div>
+
+  <hr>
+  <br>
+  <div class="container-fluid">
     {% for post in posts %}
-        <h2>{{ post.title }}</h2>
+      <div class="jumbotron posts-content">
+        <h2 class="display-3">{{ post.title }}</h2>
 
         {% if post.author %}
-            <h5><em>Written by: {{ post.author }} on {{ post.date_posted }}</em></h5>
+          <p class="lead"><em>Written by: {{ post.author }} on {{ post.date_posted }}</em></p>
         {% else %}
-            <h5><em>Written by Unknown on {{ post.date_posted }}</em></h5>
+          <p class="lead"><em>Written by Unknown on {{ post.date_posted }}</em></p>
         {% endif %}
         <br>
-        
         <p style="white-space: pre-wrap">{{ post.content }}</p>
+      </div>
+      <a class="btn btn-danger" href="/posts/delete/{{ post.id }}">Delete</a>
+      <a class="btn btn-dark" href="/posts/edit/{{ post.id }}">Edit</a>
+      <hr>
 
-        <br>
-        <br>
-
-        <a class="btn btn-danger" href="/posts/delete/{{ post.id }}">Delete</a>
-        <a class="btn btn-dark" href="/posts/edit/{{ post.id }}">Edit</a>
-        <hr>
     {% endfor %}
-
+  </div>
 {% endblock %}

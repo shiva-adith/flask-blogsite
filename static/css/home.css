@@ -1,0 +1,38 @@
+body {
+    background-image: url("../img/street.png");
+    /*background-color: #cccccc;*/
+    background-size: cover;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+}
+
+#mainNav {
+    background-color: black;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#mainNav a {
+    color: white;
+    opacity: 1;
+    text-shadow: #444 0 1px 1px;
+}
+
+.jumbotron {
+    background-color: darkgrey;
+    text-shadow: #444 0 1px 1px;
+    color: white;
+    margin-top: 10%;
+    opacity: 0.8;
+}
+
+.home-heading {
+    margin-bottom: 7%;
+    font-weight: 700;
+}
+
+/*.container-fluid {*/
+/*    position: relative;*/
+/*    text-align: center;*/
+/*    !*margin: ;*!*/
+/*}*/

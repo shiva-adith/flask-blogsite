@@ -6,8 +6,8 @@ h1, h2, h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
-.header-div {
-    text-align: center;
+.header-row {
+    text-align: left;
     margin-top: 5%;
 }
 
@@ -18,6 +18,23 @@ h1, h2, h3 {
     font-weight: 600;
 }
 
+.posts-content {
+    background-color: #e3fdfd;
+}
+
 .new-post {
     float: right;
 }
+
+.brand-nav {
+    padding: 0.5rem 1rem;
+}
+
+#mainNav {
+  /*position: absolute;*/
+  border-bottom: 1px solid #e9ecef;
+  font-family: 'Montserrat',sans-serif;
+  background: transparent;
+}
+
+

@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Posts</title>
+  <title>Posts</title>
 {% endblock %}
 
 {% block body %}
-<h1>Create new Posts here!</h1>
-
-<hr>
-<h2>Create new Blog Post: </h2>
-<form action="/posts" method="POST">
+  <br>
+  <h2>New Blog Post: </h2>
+  <br>
+  <form action="{{ url_for('posts') }}" method="POST">
     <label for="title"><strong>Title: </strong></label>
     <input class="form-control" type="text" name="title" id="title" placeholder="Enter Title" aria-label="Enter Title">
     <br>
     <label for="author"><strong>Author: </strong></label>
-    <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author's name" aria-label="Enter Author's name">
+    <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author's name"
+           aria-label="Enter Author's name">
     <br>
     <label for="content"><strong>Post: </strong></label>
-    <textarea class="form-control" name="content" id="content" placeholder="Enter Content" aria-label="Enter Content" rows="10"></textarea>
+    <textarea class="form-control" name="content" id="content" placeholder="Enter Content" aria-label="Enter Content"
+              rows="10"></textarea>
     <br>
     <input type="submit" value="Post">
-</form>
+  </form>
 
 {% endblock %}

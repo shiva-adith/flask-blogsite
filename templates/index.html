@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Home</title>
+  <title>Home</title>
 {% endblock %}
 
+<body class="body-home">
 {% block body %}
-<br>
-<h1>Hello, Welcome to the Home Page!</h1>
-<br>
-<main role="main">
-    <div class="jumbotron">
+  <link class="home-img" rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <br>
+  {#        <h1 class="home-intro">Hello, Welcome to the Home Page!</h1>#}
+  <br>
+  <main role="main">
+    <div class="jumbotron d-flex align-items-center">
       <div class="col-sm-8 mx-auto">
-        <h1>A Blog about Computers!</h1>
-        <p>This is a blog for everything computer science. Learn from scratch or catch up on the latest tech, frameworks, languages and lots more! Checkout my <a href="https://shiva-adith.github.io/my_portfolio/index.html">Portfolio Website</a> for an overview of my work so far in the fields of Data science and Machine Learning, and also software development!.</p>
+        <h1 class="home-heading">A Blog about Computers!</h1>
+        <p>This is a blog for everything computer science. Learn from scratch or catch up on the latest tech,
+          frameworks, languages and lots more! <br>Checkout my <a
+                  href="https://shiva-adith.github.io/my_portfolio/">Portfolio Website</a> for an overview of
+          my work so far in the fields of Data science and Machine Learning, and also software development!.</p>
         <p>
           <a class="btn btn-primary" href="/posts" role="button">View Posts &raquo;</a>
         </p>
@@ -20,3 +25,4 @@
     </div>
   </main>
 {% endblock %}
+</body>
