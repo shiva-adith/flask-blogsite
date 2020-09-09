@@ -96,7 +96,7 @@ def new_posts():
         return render_template('new_post.html')
 
 
-@app.route('/contact', methods=['GET','POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
     return render_template('contact.html')
 
