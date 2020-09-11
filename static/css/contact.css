@@ -1,52 +1,81 @@
-/*header {*/
-/*    display: block;*/
-/*}*/
-
-/*header .masthead {*/
-/*    margin-bottom: 50px;*/
-/*    background: #6c757d no-repeat 50% 50%;*/
-/*    position: relative;*/
-/*    background-size: cover;*/
-/*}*/
-
-/*header .masthead .overlay {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    height: 100%;*/
-/*    width: 100%;*/
-/*    background-color: #212529;*/
-/*    opacity: 0.5;*/
-/*}*/
-
-/*header.masthead .site-heading {*/
-/*    text-align: center;*/
-/*    padding: 200px 0 150px;*/
-/*    color: #fff;*/
-/*}*/
-
 body {
     margin: 0;
     font-size: 1rem;
-    color: #212529;
     font-family: Montserrat, sans-serif;
     font-weight: 400;
     line-height: 1.5;
     text-align: left;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../img/contact-bg.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+@media (max-width: 1500px) {
+    body {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../img/contact-bg-rotated.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+}
+
+p {
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+h1{
+    font-size: 5rem;
+    color: #ffffff;
+}
+
+@media (max-width: 1028px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+label {
+    color: #ffffff;
+}
+
+.subheading {
+    font-size: 1.5rem;
+}
+
+.site-heading {
+    padding: 200px 0 200px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.contact-body {
     background-color: #f4f6ff;
 }
 
-.contact-bg {
-    padding: 200px 0 200px;
-    text-align: center;
-    color: #fff;
+.container {
+    margin: 0 auto;
+    width: 100%;
 }
 
-/*header.masthead{*/
-/*    color: #fff;*/
-/*    text-align: center;*/
-/*    padding: 200px 0 200px;*/
-/*    height: 25%;*/
-/*    position: relative;*/
-/*    margin-bottom: 50px;*/
+#mainNav a {
+    color: #ffffff;
+}
+
+#mainNav {
+    background-color: #000000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+/*.jumbotron {*/
+/*    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));*/
+/*    background-size: cover;*/
 /*}*/

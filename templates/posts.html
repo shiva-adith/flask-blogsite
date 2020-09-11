@@ -4,8 +4,9 @@
   <title>Posts</title>
 {% endblock %}
 
+<body class="posts-page">
 {% block body %}
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/view-post.css') }}">
   <div class="row header-row">
     <div class="col-lg-6">
       <h1 class="posts-heading">All posts are displayed here!</h1>
@@ -37,3 +38,4 @@
     {% endfor %}
   </div>
 {% endblock %}
+</body>

@@ -11,21 +11,6 @@ h1, h2, h3 {
     margin-top: 5%;
 }
 
-.posts-heading {
-    display: inline-block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
-.posts-content {
-    background-color: #e3fdfd;
-}
-
-.new-post {
-    float: right;
-}
-
 .brand-nav {
     padding: 0.5rem 1rem;
 }
@@ -37,4 +22,6 @@ h1, h2, h3 {
   background: transparent;
 }
 
-
+.navbar-toggler {
+    background-color: #ffffff;
+}
