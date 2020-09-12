@@ -5,22 +5,61 @@
 {% endblock %}
 
 {% block body %}
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/new-post.css') }}">
   <br>
-  <h2>New Blog Post: </h2>
+  <h2 class="new-post-header">New Blog Post: </h2>
   <br>
-  <form action="{{ url_for('posts') }}" method="POST">
-    <label for="title"><strong>Title: </strong></label>
-    <input class="form-control" type="text" name="title" id="title" placeholder="Enter Title" aria-label="Enter Title">
+  <form class="needs-validation" novalidate action="{{ url_for('posts') }}" method="POST">
+    <div class="form-group">
+      <label for="title"><strong>Title: </strong></label>
+      <input class="form-control" type="text" name="title" id="title" placeholder="Enter Title"
+             aria-label="Enter Title" required>
+      <div class="invalid-feedback">
+        Please enter the Title!
+      </div>
+    </div>
     <br>
-    <label for="author"><strong>Author: </strong></label>
-    <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author's name"
-           aria-label="Enter Author's name">
+    <div class="form-group">
+      <label for="author"><strong>Author: </strong></label>
+      <input class="form-control" type="text" name="author" id="author" placeholder="Enter Author's name"
+             aria-label="Enter Author's name" required>
+      <div class="invalid-feedback">
+        Please enter Author's name!
+      </div>
+    </div>
     <br>
-    <label for="content"><strong>Post: </strong></label>
-    <textarea class="form-control" name="content" id="content" placeholder="Enter Content" aria-label="Enter Content"
-              rows="10"></textarea>
+    <div class="form-group">
+      <label for="content"><strong>Post: </strong></label>
+      <textarea class="form-control" name="content" id="content" placeholder="Enter Content" aria-label="Enter Content"
+                rows="10" required></textarea>
+      <div class="invalid-feedback">
+        Please write-up some content for the Post!
+      </div>
+    </div>
     <br>
-    <input type="submit" value="Post">
+    <button type="submit" class="btn btn-success btn-lg">Post</button>
   </form>
+  <br>
+
+  <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+          'use strict';
+          window.addEventListener('load', function () {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function (form) {
+                  form.addEventListener('submit', function (event) {
+                      if (form.checkValidity() === false) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                      }
+                      form.classList.add('was-validated');
+                  }, false);
+              });
+          }, false);
+      })();
+  </script>
 
 {% endblock %}

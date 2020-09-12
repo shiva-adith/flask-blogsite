@@ -13,76 +13,60 @@
 
 
 
-    <div class="row">
-      <div class="col-md-10 col-lg-8 mx-auto">
-        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as
-          possible!</p>
-        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="name">Name</label>
-              <input id="name" class="form-control" type="text" required placeholder="Name">
-              <small class="form-text text-danger help-block"></small>
-            </div>
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-auto">
+      <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as
+        possible!</p>
+      <form id="contactForm" name="sentMessage" novalidate="novalidate">
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label for="name">Name</label>
+            <input id="name" class="form-control" type="text" required placeholder="Name">
+            <small class="form-text text-danger help-block"></small>
           </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="email">Email Address</label>
-              <input id="email" class="form-control" type="email" required placeholder="Email Address">
-              <small class="form-text text-danger help-block"></small>
-            </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label for="email">Email Address</label>
+            <input id="email" class="form-control" type="email" required placeholder="Email Address">
+            <small class="form-text text-danger help-block"></small>
           </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="phone">Phone Number</label>
-              <input id="phone" class="form-control" type="tel" required placeholder="Phone Number">
-              <small class="form-text text-danger help-block"></small>
-            </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label for="phone">Phone Number</label>
+            <input id="phone" class="form-control" type="tel" required placeholder="Phone Number">
+            <small class="form-text text-danger help-block"></small>
           </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="message">Message</label>
-              <textarea id="message" class="form-control" data-validation-required-message="Please enter a message!"
-                        placeholder="Message" rows="5"></textarea>
-              <small class="form-text text-danger help-block"></small>
-            </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label for="message">Message</label>
+            <textarea id="message" class="form-control" data-validation-required-message="Please enter a message!"
+                      placeholder="Message" rows="5"></textarea>
+            <small class="form-text text-danger help-block"></small>
           </div>
-          <div id="success"></div>
-          <div class="form-group">
-            <button id="sendMessageButton" class="btn btn-primary" type="submit">Send</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div id="success"></div>
+        <div class="form-group">
+          <button id="sendMessageButton" class="btn btn-primary" type="submit">Send</button>
+        </div>
+      </form>
     </div>
-
-
+  </div>
   <hr>
 {% endblock %}
 
 {% block footer %}
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 col-lg-8 mx-auto">
-          <ul class="list-inline text-center">
-            <li class="list-inline-item">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fab fa-github fa-stack-1x fa-inverse"></i>"
-              </span>
-            </li>
-            <li class="list-inline-item">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
-              </span>
-            </li>
-          </ul>
-          <p class="text-muted copyright">Copyright © Brand 2020</p>
-        </div>
-      </div>
+  <footer class="white-section" id="footer">
+    <div class="container-fluid">
+      <i class="social-icon fab fa-twitter"></i>
+      <i class="social-icon fab fa-facebook-f"></i>
+      <i class="social-icon fab fa-instagram"></i>
+      <p class="social-icon footer-text">Copyright ©  BlacBurn 2020</p>
     </div>
   </footer>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
           integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
           crossorigin="anonymous"></script>

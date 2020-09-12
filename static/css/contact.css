@@ -1,7 +1,6 @@
 body {
     margin: 0;
     font-size: 1rem;
-    font-family: Montserrat, sans-serif;
     font-weight: 400;
     line-height: 1.5;
     text-align: left;
@@ -60,10 +59,10 @@ label {
     background-color: #f4f6ff;
 }
 
-.container {
-    margin: 0 auto;
-    width: 100%;
-}
+/*.container {*/
+/*    margin: 0 auto;*/
+/*    width: 100%;*/
+/*}*/
 
 #mainNav a {
     color: #ffffff;
@@ -73,6 +72,23 @@ label {
     background-color: #000000;
     opacity: 0.8;
     filter: alpha(opacity=80);
+}
+
+footer {
+    background: #ffffff;
+    color: #000000;
+    text-align: center;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.footer-text {
+    color: #14ffec;
+    font-size: 1rem;
+}
+
+.social-icon {
+    margin: 20px 10px;
 }
 
 /*.jumbotron {*/

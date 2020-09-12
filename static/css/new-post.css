@@ -1,0 +1,39 @@
+body {
+    background: url("../img/new-posts-bg-2.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#mainNav {
+    background-color: #ffffff;
+    opacity: 0.9;
+    filter: alpha(opacity=50);
+}
+
+#mainNav a {
+    color: #000000;
+}
+
+.new-post-header {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 7% 0;
+    padding: 3px;
+    border: 2px solid #74f9ff;
+    border-radius: 5px;
+    background: rgb(204, 204, 204);
+    background: rgba(255, 255, 255, 0.8);
+    width: fit-content;
+}
+
+@media (max-width: 1028px) {
+    .new-post-header {
+        font-size: 1.5rem;
+    }
+}
+
+label {
+    font-size: 2rem;
+}
