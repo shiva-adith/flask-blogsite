@@ -3,12 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:blacburn9551@localhost/blacburn_blogposts'
 db = SQLAlchemy(app)
 
 
 # creating a template for all the posts to follow
 class BlogPost(db.Model):
+    __tablename__ = "posts"
     # creating columns for each different category
     # each row reps. diff. blog posts
 
