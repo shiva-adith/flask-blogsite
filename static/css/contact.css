@@ -1,3 +1,9 @@
+/* HTML tags */
+h1{
+    font-size: 5rem;
+    color: #ffffff;
+}
+
 body {
     margin: 0;
     font-size: 1rem;
@@ -11,6 +17,28 @@ body {
     background-size: cover;
 }
 
+p {
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+label {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+/* Navigation Bar */
+#mainNav a {
+    color: #ffffff;
+}
+
+#mainNav {
+    background-color: #000000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+/* Media Queries */
 @media (max-width: 1500px) {
     body {
         background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../img/contact-bg-rotated.png") no-repeat center center fixed;
@@ -19,16 +47,6 @@ body {
         -o-background-size: cover;
         background-size: cover;
     }
-}
-
-p {
-    color: #ffffff;
-    font-size: 1.5rem;
-}
-
-h1{
-    font-size: 5rem;
-    color: #ffffff;
 }
 
 @media (max-width: 1028px) {
@@ -41,10 +59,7 @@ h1{
     }
 }
 
-label {
-    color: #ffffff;
-}
-
+/* Headings */
 .subheading {
     font-size: 1.5rem;
 }
@@ -55,43 +70,6 @@ label {
     color: #ffffff;
 }
 
-.contact-body {
-    background-color: #f4f6ff;
+.form-heading {
+    margin-bottom: 7%;
 }
-
-/*.container {*/
-/*    margin: 0 auto;*/
-/*    width: 100%;*/
-/*}*/
-
-#mainNav a {
-    color: #ffffff;
-}
-
-#mainNav {
-    background-color: #000000;
-    opacity: 0.8;
-    filter: alpha(opacity=80);
-}
-
-footer {
-    background: #ffffff;
-    color: #000000;
-    text-align: center;
-    opacity: 0.8;
-    filter: alpha(opacity=80);
-}
-
-.footer-text {
-    color: #14ffec;
-    font-size: 1rem;
-}
-
-.social-icon {
-    margin: 20px 10px;
-}
-
-/*.jumbotron {*/
-/*    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));*/
-/*    background-size: cover;*/
-/*}*/
