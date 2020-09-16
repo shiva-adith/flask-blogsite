@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
+from forms import ContactForm
 from datetime import datetime
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:blacburn9551@localhost/blacburn_blogposts'
+mail = Mail()
+app = Flask(__name__, instance_relative_config=False)
+app.config.from_object('config.Config')
 db = SQLAlchemy(app)
+mail.init_app(app)
 
 
 # creating a template for all the posts to follow
@@ -100,6 +104,24 @@ def new_posts():
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     return render_template('contact.html')
+
+
+@app.route('/cntct', methods=['GET', 'POST'])
+def cntctpg():
+    form = ContactForm()
+
+    if request.method == 'POST':
+        if not form.validate():
+            return render_template('cntct.html', form=form)
+        else:
+            msg = Message(form.subject.data, sender='blacburn.dev@gmail.com', recipients=['shivaadith@gmail.com', '2020mt93134@wilp.bits-pilani.ac.in'])
+            msg.body = f"""From: {form.name.data} <{form.email.data}>
+                           {form.message.data}"""
+            msg.send(msg)
+            return render_template('cntct.html', success=True)
+
+    elif request.method == 'GET':
+        return render_template('cntct.html', form=form)
 
 
 if __name__ == "__main__":
