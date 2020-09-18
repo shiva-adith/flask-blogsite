@@ -9,3 +9,6 @@ posts.db
 
 # Ignore environment variables file
 .env
+
+# Ignore architecture files
+architecture
