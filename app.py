@@ -1,32 +1,17 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from forms import ContactForm
-from datetime import datetime
+from config import Config
+
 
 mail = Mail()
 app = Flask(__name__, instance_relative_config=False)
-app.config.from_object('config.Config')
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail.init_app(app)
 
-
-# creating a template for all the posts to follow
-class BlogPost(db.Model):
-    __tablename__ = "posts"
-    # creating columns for each different category
-    # each row reps. diff. blog posts
-
-    # primary_key ensures that each ID s unique and can be used to identify diff. posts
-    id = db.Column(db.Integer, primary_key=True)
-    # nullable ensures that no title is left empty
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(30), nullable=False, default='Not Available')
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return "Blog Post " + str(self.id)
+from models import *
 
 
 @app.route("/") 
@@ -101,27 +86,36 @@ def new_posts():
         return render_template('new_post.html')
 
 
+# @app.route('/contact', methods=['GET', 'POST'])
+# def contact():
+#     return render_template('contact-old.html')
+
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html')
-
-
-@app.route('/cntct', methods=['GET', 'POST'])
-def cntctpg():
     form = ContactForm()
 
-    if request.method == 'POST':
-        if not form.validate():
-            return render_template('cntct.html', form=form)
-        else:
-            msg = Message(form.subject.data, sender='blacburn.dev@gmail.com', recipients=['shivaadith@gmail.com', '2020mt93134@wilp.bits-pilani.ac.in'])
-            msg.body = f"""From: {form.name.data} <{form.email.data}>
-                           {form.message.data}"""
-            msg.send(msg)
-            return render_template('cntct.html', success=True)
+    if form.validate_on_submit():
+        msg = Message(form.subject.data, recipients=['blacburn.dev@gmail.com'])
+        msg.body = f"""From: {form.name.data} <{form.email.data}>
+                                        {form.message.data}"""
+        mail.send(msg)
+        return render_template('contact.html', success=True)
 
-    elif request.method == 'GET':
-        return render_template('cntct.html', form=form)
+    # if request.method == 'POST':
+    #     if not form.validate():
+    #         return render_template('contact.html', form=form)
+    #     else:
+    #         msg = Message(form.subject.data, recipients=['blacburn.dev@gmail.com'])
+    #         msg.body = f"""From: {form.name.data} <{form.email.data}>
+    #                              {form.message.data}"""
+    #
+    #         # msg.body = "Hello"
+    #         mail.send(msg)
+    #         # return "Form posted"
+    #         return render_template('contact.html', success=True)
+
+    return render_template('contact.html', form=form)
 
 
 if __name__ == "__main__":

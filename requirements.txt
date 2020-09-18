@@ -1,19 +1,37 @@
+alembic==1.4.3
 astroid==2.4.2
+blinker==1.4
 certifi==2020.6.20
 click==7.1.2
+dnspython==1.16.0
+email-validator @ file:///tmp/build/80754af9/email-validator_1597787390459/work
 Flask==1.1.2
-Flask-SQLAlchemy==2.4.4
+Flask-Mail==0.9.1
+Flask-Migrate==2.5.3
+Flask-Script==2.0.6
+Flask-SQLAlchemy @ file:///tmp/build/80754af9/flask-sqlalchemy_1596836624296/work
+Flask-WTF==0.14.3
 gunicorn==20.0.4
+idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.11.2
 lazy-object-proxy==1.4.3
+Mako==1.1.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
+psycopg2-binary==2.8.6
 pylint==2.5.3
-SQLAlchemy==1.3.19
+python-dateutil==2.8.1
+python-dotenv==0.14.0
+python-editor==1.0.4
+six==1.15.0
+SQLAlchemy @ file:///C:/ci/sqlalchemy_1598374833867/work
 toml==0.10.1
 Werkzeug==1.0.1
 wincertstore==0.2
 wrapt==1.12.1
+WTForms @ file:///tmp/build/80754af9/wtforms_1597707484216/work
+
 wtforms~=2.3.3
+sqlalchemy~=1.3.19

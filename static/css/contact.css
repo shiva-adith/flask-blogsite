@@ -66,6 +66,11 @@ p {
     color: #ffffff;
 }
 
+.success {
+    text-align: center;
+    margin: 3% auto 15%;
+}
+
 /* Contact Form */
 .form-heading {
     margin-bottom: 7%;
