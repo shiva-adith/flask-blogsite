@@ -11,7 +11,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail.init_app(app)
 
-from models import *
+from models import BlogPost
 
 
 @app.route("/") 
@@ -26,17 +26,18 @@ def posts():
     # has to be referenced in the corresponding html page
     if request.method == 'POST':
         post_title = request.form['title']
+        post_slug = request.form['slug']
         post_content = request.form['content']
         post_author = request.form['author']
-        new_post = BlogPost(title=post_title, content=post_content, author=post_author)
+        new_post = BlogPost(title=post_title, slug=post_slug, content=post_content, author=post_author)
         db.session.add(new_post)
         # this commits the changes to the database. Otherwise the contents 
         # will exist only in the current session and will be lost when a new sessions starts
         db.session.commit()
         return redirect('/posts')
-    else:
-        all_posts = BlogPost.query.order_by(BlogPost.date_posted)
-        return render_template('posts.html', posts=all_posts)
+
+    all_posts = BlogPost.query.order_by(BlogPost.date_posted.desc())
+    return render_template('posts.html', posts=all_posts)
 
 
 @app.route("/home/users/<string:name>/posts/<int:tag>")
@@ -68,8 +69,8 @@ def edit_post(idx):
         post.content = request.form['content']
         db.session.commit()
         return redirect('/posts')
-    else:
-        return render_template('edit.html', posts=post)
+
+    return render_template('edit.html', posts=post)
 
 
 @app.route('/posts/new', methods=['GET', 'POST'])
@@ -82,8 +83,8 @@ def new_posts():
         db.session.add(new_post)
         db.session.commit()
         return redirect('/posts')
-    else:
-        return render_template('new_post.html')
+
+    return render_template('new_post.html')
 
 
 # @app.route('/contact', methods=['GET', 'POST'])
