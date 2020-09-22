@@ -1,8 +1,10 @@
-from app import db
+from app import db, login
 from datetime import datetime
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """
     Template for the User data model.
 
@@ -16,7 +18,7 @@ class User(db.Model):
         Unique name of the user created during Sign-up
     email : str (limit = 120 chars)
         User's email address
-    writers_post : Database Relationship
+    writers_posts : Database Relationship
         Class User has a one-to-many relationship with Class BlogPost.
         For each User, the function relationship() points to BlogPost and
         loads multiple Posts written by them.
@@ -27,16 +29,29 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), index=True, unique=True, nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
-    writers_posts = db.relationship('BlogPost', lazy='select',  backref=db.backref('writer', lazy='joined'))
+    password_hash = db.Column(db.String(128))
+    writers_posts = db.relationship('BlogPost', lazy='select', backref=db.backref('writer', lazy='joined'),
+                                    cascade='all, delete-orphan')
 
     # def __init__(self, username, email, writers_post):
     #     self.username = username
     #     self.email = email
     #     self.writers_post = writers_post
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
         # TODO/FIX : remove 'User' from the print statement
         return f"User {self.username}"
+
+
+@login.user_loader
+def load_user(id):
+    return db.session.query(User).get(int(id))
 
 
 # creating a template for all the posts to follow
@@ -74,7 +89,8 @@ class Category(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     # For one to many relationships:
     # relationship is usually defined in the parent class and the foreign key is placed in the child class.
-    category_posts = db.relationship('BlogPost', lazy='select', backref=db.backref('category', lazy='joined'))
+    category_posts = db.relationship('BlogPost', lazy='select', backref=db.backref('category', lazy='joined'),
+                                     cascade='all, delete-orphan')
 
     def __repr__(self):
         return f"{str(self.id)}:{self.name}"

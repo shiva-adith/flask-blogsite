@@ -1,26 +1,21 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail, Message
-from forms import ContactForm
-from config import Config
+from flask import render_template, redirect, flash, url_for, request
+from flask_login import current_user, login_user, logout_user, login_required
+from flask_mail import Message
+from werkzeug.urls import url_parse
+from app import app, db, mail
+from app.forms import LoginForm, ContactForm
+from app.models import User, BlogPost
 
 
-mail = Mail()
-app = Flask(__name__, instance_relative_config=False)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-mail.init_app(app)
-
-from models import BlogPost
-
-
-@app.route("/") 
+@app.route("/")
+@app.route("/index")
 def index():
     return render_template('index.html')
 
 
 # by default the method allowed is only GET
 @app.route("/posts", methods=['GET', 'POST'])
+# @login_required
 def posts():
     # posts is a variable that we create, and the same
     # has to be referenced in the corresponding html page
@@ -31,12 +26,13 @@ def posts():
         post_author = request.form['author']
         new_post = BlogPost(title=post_title, slug=post_slug, content=post_content, author=post_author)
         db.session.add(new_post)
-        # this commits the changes to the database. Otherwise the contents 
+        # this commits the changes to the database. Otherwise the contents
         # will exist only in the current session and will be lost when a new sessions starts
         db.session.commit()
         return redirect('/posts')
 
-    all_posts = BlogPost.query.order_by(BlogPost.date_posted.desc())
+    # all_posts = BlogPost.query.order_by(BlogPost.date_posted.desc())
+    all_posts = db.session.query(BlogPost).order_by(BlogPost.date_posted.desc())
     return render_template('posts.html', posts=all_posts)
 
 
@@ -52,7 +48,8 @@ def method():
 
 @app.route('/posts/delete/<int:idx>')
 def delete_post(idx):
-    post = BlogPost.query.get_or_404(idx)
+    # post = BlogPost.query.get_or_404(idx)
+    post = db.session.query(BlogPost).get_or_404(idx)
     db.session.delete(post)
     db.session.commit()
     return redirect('/posts')
@@ -61,14 +58,15 @@ def delete_post(idx):
 @app.route('/posts/edit/<int:idx>', methods=['GET', 'POST'])
 def edit_post(idx):
 
-    post = BlogPost.query.get_or_404(idx)
+    # post = BlogPost.query.get_or_404(idx)
+    post = db.session.query(BlogPost).get_or_404(idx)
 
     if request.method == 'POST':
         post.title = request.form['title']
         post.author = request.form['author']
         post.content = request.form['content']
         db.session.commit()
-        return redirect('/posts')
+        return redirect(url_for('posts'))
 
     return render_template('edit.html', posts=post)
 
@@ -82,14 +80,35 @@ def new_posts():
         new_post = BlogPost(title=post_title, author=post_author, content=post_content)
         db.session.add(new_post)
         db.session.commit()
-        return redirect('/posts')
+        return redirect(url_for('posts'))
 
     return render_template('new_post.html')
 
 
-# @app.route('/contact', methods=['GET', 'POST'])
-# def contact():
-#     return render_template('contact-old.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        # user = User.query.filter_by(username=form.username.data).first()
+        user = db.session.query(User).filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid Username or Password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -117,7 +136,3 @@ def contact():
     #         return render_template('contact.html', success=True)
 
     return render_template('contact.html', form=form)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
