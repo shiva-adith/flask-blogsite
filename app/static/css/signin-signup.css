@@ -1,5 +1,4 @@
 /* HTML tags */
-/* Contact Page */
 h1 {
     font-size: 5rem;
     color: #ffffff;
@@ -11,7 +10,7 @@ body {
     font-weight: 400;
     line-height: 1.5;
     text-align: left;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/contact-bg.png") no-repeat center center fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/website-bg.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -25,10 +24,11 @@ p {
 
 /* Login Page */
 .login-body {
-    text-align: center;
+    text-align: left;
 }
 
 .login-heading {
+    display: inline-block;
     padding: 5px;
     margin: 5% auto 8%;
 }
@@ -50,15 +50,15 @@ p {
 }
 
 /* Media Queries */
-@media (max-width: 1500px) {
-    body {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/contact-bg-rotated.png") no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-}
+/*@media (max-width: 1500px) {*/
+/*    body {*/
+/*        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/contact-bg-rotated.png") no-repeat center center fixed;*/
+/*        -webkit-background-size: cover;*/
+/*        -moz-background-size: cover;*/
+/*        -o-background-size: cover;*/
+/*        background-size: cover;*/
+/*    }*/
+/*}*/
 
 @media (max-width: 1028px) {
     h1 {

@@ -66,7 +66,8 @@ class BlogPost(db.Model):
     title = db.Column(db.String(255), nullable=False)
     slug = db.Column(db.String(255))
     content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(30), nullable=False, default='Not Available')
+    # author = db.Column(db.String(30), nullable=False, default='Not Available')
+
     # datetime.utcnow method names are used instead of calling the methods to ensure that the
     # method is called when the posts are actually updated/posted instead of during the execution of code
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -76,7 +77,7 @@ class BlogPost(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), index=True)
 
     def __repr__(self):
-        return f"Blog Post {str(self.id)}:{self.title}"
+        return f"Blog Post {str(self.id)}: {self.title}"
 
 
 #  Future implementations:

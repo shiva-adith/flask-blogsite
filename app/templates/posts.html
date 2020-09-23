@@ -23,8 +23,8 @@
       <div class="jumbotron posts-content">
         <h2 class="display-3">{{ post.title }}</h2>
 
-        {% if post.author %}
-          <p class="lead"><em>Written by: {{ post.author.username }} on {{ post.date_posted }}</em></p>
+        {% if post.writer.username %}
+          <p class="lead"><em>Written by: {{ post.writer.username }} on {{ post.date_posted }}</em></p>
         {% else %}
           <p class="lead"><em>Written by Unknown on {{ post.date_posted }}</em></p>
         {% endif %}
