@@ -30,17 +30,17 @@ def users(username):
 def posts():
     # posts is a variable that we create, and the same
     # has to be referenced in the corresponding html page
-    if request.method == 'POST':
-        post_title = request.form['title']
-        post_slug = request.form['slug']
-        post_content = request.form['content']
-        post_author = request.form['author']
-        new_post = BlogPost(title=post_title, slug=post_slug, content=post_content, author=post_author)
-        db.session.add(new_post)
-        # this commits the changes to the database. Otherwise the contents
-        # will exist only in the current session and will be lost when a new sessions starts
-        db.session.commit()
-        return redirect('/posts')
+    # if request.method == 'POST':
+    #     post_title = request.form['title']
+    #     post_slug = request.form['slug']
+    #     post_content = request.form['content']
+    #     post_author = request.form['author']
+    #     new_post = BlogPost(title=post_title, slug=post_slug, content=post_content, author=post_author)
+    #     db.session.add(new_post)
+    #     # this commits the changes to the database. Otherwise the contents
+    #     # will exist only in the current session and will be lost when a new sessions starts
+    #     db.session.commit()
+    #     return redirect('/posts')
 
     # all_posts = BlogPost.query.order_by(BlogPost.date_posted.desc())
     all_posts = db.session.query(BlogPost).order_by(BlogPost.date_posted.desc())
