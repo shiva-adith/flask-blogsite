@@ -13,15 +13,20 @@ class User(UserMixin, db.Model):
     Attributes
     ----------
     __tablename__ : str
-        Name of the table in the database
+        Name of the table in the database.
     username : str (limit = 30 chars)
-        Unique name of the user created during Sign-up
+        Unique name of the user created during Sign-up.
     email : str (limit = 120 chars)
-        User's email address
+        User's email address.
     writers_posts : Database Relationship
         Class User has a one-to-many relationship with Class BlogPost.
         For each User, the function relationship() points to BlogPost and
         loads multiple Posts written by them.
+    about_me : str (limit = 250 chars)
+        A short description about the user to be displayed on their profile.
+    last_seen : DateTime
+        Keeps track of the user's most recent active session.
+
     """
 
     __tablename__ = "users"
@@ -32,6 +37,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     writers_posts = db.relationship('BlogPost', lazy='select', backref=db.backref('writer', lazy='joined'),
                                     cascade='all, delete-orphan')
+    about_me = db.Column(db.String(250))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     # def __init__(self, username, email, writers_post):
     #     self.username = username
@@ -39,14 +46,41 @@ class User(UserMixin, db.Model):
     #     self.writers_post = writers_post
 
     def set_password(self, password):
+        """Sets password entered by the user to the profile
+
+        Parameters
+        ----------
+        password : str
+            New password entered by User
+
+        # TODO: make an entry for 'Raises' - errors encountered
+
+        Returns
+        -------
+            None
+        """
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
+        """Checks the entered password against the one stored to see if they match.
+
+        Parameters
+        ----------
+        password : str
+            Password entered by the user.
+
+        # TODO: make an entry for 'Raises' - errors encountered
+
+        Returns
+        -------
+        Boolean
+            True or False depending on whether the input matches the stored value.
+        """
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         # TODO/FIX : remove 'User' from the print statement
-        return f"User {self.username}"
+        return f"{self.username}"
 
 
 @login.user_loader
@@ -56,6 +90,31 @@ def load_user(id):
 
 # creating a template for all the posts to follow
 class BlogPost(db.Model):
+    """
+    Template for Blog Post model
+
+    ...
+
+    Attributes
+    ----------
+    __tablename__ : str
+        Name of the table in the database.
+    title : str (limit = 120 chars)
+        Title for the blog post.
+    slug : str (limit = 60 chars)
+        Shortened name for blog post.
+    content : Text
+        Content of the Blog Post
+    date_posted : DateTime
+        The date(in UTC time) on which a particular Post was created.
+    writers_id : int
+        A reference to the Post's author.
+        Consists of a one-to-many relationship with User model. (i.e. One user, many Posts)
+    category_id : int
+        A reference to the category to which the Post belongs to.
+        Consists of a one-to-many relationship with Category model. (i.e. One category, many Posts)
+    """
+
     __tablename__ = "posts"
     # creating columns for each different category
     # each row reps. diff. blog posts
@@ -63,8 +122,8 @@ class BlogPost(db.Model):
     # primary_key ensures that each ID s unique and can be used to identify diff. posts
     id = db.Column(db.Integer, primary_key=True)
     # nullable ensures that no title is left empty
-    title = db.Column(db.String(255), nullable=False)
-    slug = db.Column(db.String(255))
+    title = db.Column(db.String(120), nullable=False)
+    slug = db.Column(db.String(60))
     content = db.Column(db.Text, nullable=False)
     # author = db.Column(db.String(30), nullable=False, default='Not Available')
 
@@ -83,6 +142,27 @@ class BlogPost(db.Model):
 #  Future implementations:
 #
 class Category(db.Model):
+    """
+    Template for Category model
+
+    ...
+
+    Attributes
+    ----------
+
+    __tablename__ : str
+        Name of the table in the database.
+    name : str (limit = 30 chars)
+        NMame of the Category.
+    slug : str (limit = 30 chars)
+        Shortened ID for a particular category.
+    date_posted: DateTime
+        Date(in UTC time) on which a post was created.
+    category_posts : schema relationship
+        Defines the one-to-many relationship with the BlogPost model.
+        Backreference is provided and cascade option is delete-orphan.
+    """
+
     __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
@@ -101,6 +181,7 @@ post_tags = db.Table('post_tags',
                      db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True),
                      db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True)
                      )
+post_tags.__doc__ = "Manages many-to-many relationship between BlogPost and Tag models."
 
 
 # class PostTags(db.Model):
@@ -110,6 +191,23 @@ post_tags = db.Table('post_tags',
 
 
 class Tag(db.Model):
+    """
+    Template for Tag model.
+
+    Attributes
+    ----------
+    name : str (limit = 30 chars)
+        Name of the tags that posts belong to.
+    slug : str (limit = 30 chars)
+        Shortened ID for tags.
+    date_posted : DateTime
+        Date(in UTC time) on which the post was created
+    tag_posts : schema relationship
+        Defines the many-to-many relationship between Tags and Posts
+        One Tag can have many Posts, and one Post can be listed under multiple Tags.
+        Backreference is provided.
+    """
+
     __tablename__ = "tags"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
