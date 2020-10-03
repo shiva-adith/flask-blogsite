@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_mail import Message
 from werkzeug.urls import url_parse
 from app import app, db, mail
-from app.forms import LoginForm, ContactForm, RegistrationForm
+from app.forms import LoginForm, ContactForm, RegistrationForm, EditProfileForm
 from app.models import User, BlogPost
 from datetime import datetime
 
@@ -30,6 +30,33 @@ def users(username):
         {'author': user, 'content': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=post)
+
+
+@app.route('/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    # if POST request is triggered and the validation passes, the data is written
+    # to the database. If validation fails(invalid data entered), the method is
+    # still treated as a POST request but no data is written to the database.
+    # The elif statement specifying the GET request makes sure that a failed validation
+    # results in nothing being done apart from displaying errors.
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        # don't have to add to session since the current_user invokes
+        # the login.user_loader decorator and retrieves data
+        db.session.commit()
+        flash('Your changes have been saved!')
+        return redirect(url_for('edit_profile'))
+
+    # When the browser sends a GET request (i.e user visits the page for the first time
+    # the forms are filled with corresponding data stored in the database.
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    
+    return render_template('edit-profile.html', title="Edit Profile", form=form)
 
 
 # by default the method allowed is only GET
@@ -87,7 +114,7 @@ def edit_post(idx):
         db.session.commit()
         return redirect(url_for('posts'))
 
-    return render_template('edit.html', posts=post)
+    return render_template('edit-post.html', posts=post)
 
 
 @app.route('/posts/new', methods=['GET', 'POST'])
@@ -101,7 +128,7 @@ def new_posts():
         db.session.commit()
         return redirect(url_for('posts'))
 
-    return render_template('new_post.html')
+    return render_template('new-post.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])

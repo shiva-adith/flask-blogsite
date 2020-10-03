@@ -48,3 +48,9 @@ class RegistrationForm(FlaskForm):
         # to avoid:
         #     Method 'validate_<username or email>' may be 'static'
         pass
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired(message="Please enter a username for your profile")])
+    about_me = TextAreaField("About me", validators=[Length(min=0, max=140)])
+    submit = SubmitField('Save Info')
