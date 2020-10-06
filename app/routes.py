@@ -35,7 +35,7 @@ def users(username):
 @app.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     # if POST request is triggered and the validation passes, the data is written
     # to the database. If validation fails(invalid data entered), the method is
     # still treated as a POST request but no data is written to the database.
