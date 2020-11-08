@@ -3,6 +3,24 @@ from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Association Table - for defining Many-to-Many relationship b/w tables.
+post_tags = db.Table('post_tags',
+                     db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True),
+                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+                     )
+post_tags.__doc__ = "Manages many-to-many relationship between BlogPost and Tag models."
+
+# Followers Association Table:
+followers = db.Table('followers',
+                     db.Column('follower_id', db.Integer, db.ForeignKey('users.id')),
+                     db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
+                     )
+followers.__doc__ = """Manages many-to-many relationship between users and followers.
+                       Both followers and followed refer to users, i.e. the same table,
+                       hence this is a self-referential relationship. Both foreign keys
+                       link to the same entries in the user table.
+                       One instance of the User class is linked to another."""
+
 
 class User(UserMixin, db.Model):
     """
@@ -39,6 +57,10 @@ class User(UserMixin, db.Model):
                                     cascade='all, delete-orphan')
     about_me = db.Column(db.String(250))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+
+    followed = db.relationship('User', secondary=followers, primaryjoin=(followers.c.follower_id == id),
+                               secondaryjoin=(followers.c.followed_id == id),
+                               backref=db.backref("followers", lazy='dynamic'), lazy='dynamic')
 
     # def __init__(self, username, email, writers_post):
     #     self.username = username
@@ -78,8 +100,18 @@ class User(UserMixin, db.Model):
         """
         return check_password_hash(self.password_hash, password)
 
+    def is_following(self, user):
+        return self.followed.filter(followers.c.followed_id == user.id).count() > 0
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
     def __repr__(self):
-        # TODO/FIX : remove 'User' from the print statement
         return f"{self.username}"
 
 
@@ -170,24 +202,12 @@ class Category(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     # For one to many relationships:
     # relationship is usually defined in the parent class and the foreign key is placed in the child class.
+    # i.e. relationship is defined in the One side and foreign key in the Many side.
     category_posts = db.relationship('BlogPost', lazy='select', backref=db.backref('category', lazy='joined'),
                                      cascade='all, delete-orphan')
 
     def __repr__(self):
         return f"{str(self.id)}:{self.name}"
-
-
-post_tags = db.Table('post_tags',
-                     db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True),
-                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True)
-                     )
-post_tags.__doc__ = "Manages many-to-many relationship between BlogPost and Tag models."
-
-
-# class PostTags(db.Model):
-#     __tablename__ = "post_tags"
-#     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
-#     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
 
 
 class Tag(db.Model):

@@ -4,7 +4,7 @@ from app.models import User, BlogPost, Category, Tag
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'User': User, 'Post': BlogPost, 'Cat':Category, 'Tag': Tag}
+    return {'db': db, 'User': User, 'Post': BlogPost, 'Cat': Category, 'Tag': Tag}
 
 
 if __name__ == "__main__":
